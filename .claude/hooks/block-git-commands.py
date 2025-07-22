@@ -29,7 +29,7 @@ def main():
         print(f"Error parsing JSON input: {e}", file=sys.stderr)
         sys.exit(1)
     except Exception as e:
-        print(f"Error in use-bun hook: {e}", file=sys.stderr)
+        print(f"Error in block-git-commands hook: {e}", file=sys.stderr)
         sys.exit(1)
 
 

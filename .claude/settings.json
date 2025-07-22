@@ -1,61 +1,32 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(grep:*)",
-      "Bash(rg:*)",
-      "Bash(python:*)",
-      "mcp__ide__getDiagnostics",
-      "Bash(npm run build:*)",
-      "mcp__vectal__direct_delegate_to_agent",
-      "Bash(npx tsc:*)",
-      "Bash(mkdir:*)",
-      "Bash(git fetch:*)",
-      "Bash(ls:*)",
-      "Bash(find:*)",
-      "Bash(npm run lint:*)",
-      "Bash(rm:*)",
-      "WebFetch(domain:openrouter.ai)",
-      "Bash(git rev-parse:*)",
-      "Bash(npm run dev:*)",
-      "WebFetch(domain:platform.openai.com)"
-    ],
-    "deny": []
-  },
-  "enableAllProjectMcpServers": true,
   "hooks": {
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "afplay /Users/nicolas/.claude/sounds/claude-finished.mp3"
-          },
-          {
-            "type": "command",
-            "command": "curl -d \"Claude Finished!\" ntfy.sh/new-society-demo-topic"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run ~/.claude/hooks/next-lint.py"
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ~/.claude/hooks/log-tool-use.py"
+            "command": "uv run ~/.claude/hooks/block-npm-build-and-dev.py"
+          }
+        ]
+      },
+      {
+        "matcher": "exit_plan_mode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run ~/.claude/hooks/block-tool.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay ~/.claude/sounds/claude-finished.mp3"
           }
         ]
       }
